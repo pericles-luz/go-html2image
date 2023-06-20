@@ -1,4 +1,4 @@
-module go-html2image
+module github.com/pericles-luz/go-html2image
 
 go 1.20
 

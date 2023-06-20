@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-size: 1080px;
+        width: 1080px;
+        color: #000;
+        font-style: normal;
+				margin: 0;
+      }
+      div.titulo {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        font-size: 48px;
+        font-weight: 900;
+        margin-top: 100px;
+        line-height: 1em;
+        text-align: center;
+      }
+      div.texto {
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-size: 32px;
+        font-weight: 100;
+        color: #000;
+        text-align: left;
+        margin-top: 100px;
+        margin-bottom: 100px;
+        margin-left: 40px;
+        margin-right: 40px;
+        line-height: 1.6em;
+        text-align: justify;
+      }
+      span.texto-negrito {
+				font-weight: 900;
+				font-style: normal;
+        font-size: 32px;
+        font-weight: 900;
+      }
+      div.cargo {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 28px;
+        font-weight: 900;
+        margin-top: 0px;
+        line-height: 1em;
+        text-align: center;
+      }
+      div.local {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 32px;
+        font-weight: 100;
+        margin-top: 100px;
+        margin-right: 40px;
+        line-height: 1em;
+        padding-bottom: 40px;
+        text-align: right;
+      }
+      div.rodape {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 24px;
+        font-weight: 100;
+        margin-top: 100px;
+        margin-bottom: 40px;
+        margin-right: 40px;
+        margin-left: 40px;
+        line-height: 1em;
+        padding-bottom: 40px;
+        text-align: center;
+      }
+      div.centro {
+        text-align: center;
+      }
+      img.logomarca {
+        margin-top: 40px;
+        border: 0px;
+        width: 40%;
+      }
+      img.assinatura {
+        margin-top: 50px;
+        border: 0px;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="centro">
+      <img class="logomarca" src="{{.PNG_LOGOMARCA}}" />
+    </div>
+    <div class="titulo">
+      DECLARAÇÃO
+    </div>
+    <div class="texto">
+      O Sindicato Nacional dos Analistas-Tributários da Receita Federal do Brasil (Sindireceita) declara, para os devidos fins, que <span class="texto-negrito">{{.NOME}}</span>, CPF <span class="texto-negrito">{{.CPF}}</span>, tem filiação ativa neste sindicato desde <span class="texto-negrito">{{.FILIACAO}}</span>.
+    </div>
+    <div class="local">
+      Brasília-DF, {{.DATA}}.
+    </div>
+    <div class="centro">
+      <img class="assinatura" src="{{.PNG_ASSINATURA}}" />
+    </div>
+    <div class="cargo">
+      Presidente.
+    </div>
+    <div class="rodape">
+      SHCGN, 702/703 | Bloco E Loja 27 | Asa Norte | CEP: 70720-650 | Brasília-DF | Fone: (61) 3962-2300
+    </div>
+  </body>
+</html>
