@@ -1,11 +1,12 @@
 package html2image_test
 
 import (
-	"go-html2image/pkg/html2image"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/pericles-luz/go-base/pkg/utils"
+	"github.com/pericles-luz/go-html2image/pkg/html2image"
 	"github.com/stretchr/testify/require"
 )
 
@@ -35,6 +36,26 @@ func TestHTML2ImageLoadDynamicTemplate(t *testing.T) {
 	require.NoError(t, ig.LoadDynamicTemplate(utils.GetBaseDirectory("templates")+"/connect-simulacao-fgts.html", assets, map[string]string{}))
 	ig.SetDestination("teste.png")
 	ig.SetScreenWidth(640)
+	require.NoError(t, ig.GenerateImage())
+}
+
+func TestHTML2ImageLoadDynamicTemplateFiliacao(t *testing.T) {
+	if os.Getenv("GITHUB") == "yes" {
+		t.Skip("Skipping test on github")
+	}
+	assets := make(map[string]string)
+	assets["PNG_LOGOMARCA"] = utils.GetBaseDirectory("templates/assets/images") + "/logo-horizontal.png"
+	assets["PNG_ASSINATURA"] = utils.GetBaseDirectory("templates/assets/images") + "/thales-assinatura.png"
+	data := make(map[string]string)
+	data["NOME"] = "Joaquim de Teste"
+	data["CPF"] = "123.456.789-00"
+	data["FILIACAO"] = "13-05-1992"
+	data["DATA"] = time.Now().Format("02/01/2006")
+
+	ig := html2image.New()
+	require.NoError(t, ig.LoadDynamicTemplate(utils.GetBaseDirectory("templates")+"/sindireceita-declaracao-filiacao.html", assets, data))
+	ig.SetDestination("teste.png")
+	ig.SetScreenWidth(1080)
 	require.NoError(t, ig.GenerateImage())
 }
 
