@@ -20,6 +20,7 @@ const (
 type HTML2Image struct {
 	source          string
 	destinationPath string
+	imageDirectory  string
 	screenWidth     uint64
 	imageType       string
 	useExec         bool
@@ -31,14 +32,6 @@ func New() *HTML2Image {
 	HTML2Image.imageType = "png"
 	HTML2Image.screenWidth = 640
 	return HTML2Image
-}
-
-type HTML2ImageInterface interface {
-	GenerateImage() error
-	SetSource(string)
-	SetDestination(string)
-	SetScreenWidth(uint64)
-	GetDestination() string
 }
 
 func (h *HTML2Image) GenerateImage() error {
@@ -102,7 +95,14 @@ func (h *HTML2Image) getImageType() string {
 	return h.imageType
 }
 
+func (h *HTML2Image) SetImageDirectory(imageDirectory string) {
+	h.imageDirectory = imageDirectory
+}
+
 func (h *HTML2Image) getImageDirectory() string {
+	if h.imageDirectory != "" {
+		return h.imageDirectory
+	}
 	return utils.GetBaseDirectory("images")
 }
 
