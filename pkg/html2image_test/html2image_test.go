@@ -1,12 +1,12 @@
 package html2image_test
 
 import (
-	"go-html2image/pkg/html2image"
 	"os"
 	"testing"
 	"time"
 
 	"github.com/pericles-luz/go-base/pkg/utils"
+	"github.com/pericles-luz/go-html2image/pkg/html2image"
 	"github.com/stretchr/testify/require"
 )
 
