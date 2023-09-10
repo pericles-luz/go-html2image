@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/pericles-luz/go-base/pkg/utils"
-	"github.com/pericles-luz/go-easy-html-template/pkg/easy_html_template"
+	"github.com/pericles-luz/go-html2image/internal/common"
 )
 
 const (
@@ -18,12 +18,11 @@ const (
 )
 
 type HTML2Image struct {
-	source          string
-	destinationPath string
-	imageDirectory  string
-	screenWidth     uint64
-	imageType       string
-	useExec         bool
+	common.FileBase
+	imageDirectory string
+	screenWidth    uint64
+	imageType      string
+	useExec        bool
 }
 
 func New() *HTML2Image {
@@ -35,36 +34,36 @@ func New() *HTML2Image {
 }
 
 func (h *HTML2Image) GenerateImage() error {
-	if h.source == "" {
+	if h.GetSource() == "" {
 		return errors.New(NO_IMAGE_SOURCE)
 	}
-	if h.destinationPath == "" {
+	if h.GetDestinationPath() == "" {
 		return errors.New(NO_IMAGE_DESTINATION)
 	}
 	return h.generateImageWithExec()
 }
 
 func (h *HTML2Image) generateImageWithExec() error {
-	err := os.WriteFile(h.destinationPath+".html", []byte(h.source), 0666)
+	err := os.WriteFile(h.GetDestinationPath()+".html", []byte(h.GetSource()), 0666)
 	if err != nil {
 		return err
 	}
-	log.Println("/usr/local/bin/wkhtmltoimage", "--format", h.getImageType(), "--width", "640", "--quality", "70", h.destinationPath+".html", h.destinationPath)
-	err = exec.Command("/usr/local/bin/wkhtmltoimage", "--format", h.getImageType(), "--width", "640", "--quality", "70", h.destinationPath+".html", h.destinationPath).Run()
+	log.Println("/usr/local/bin/wkhtmltoimage", "--format", h.getImageType(), "--width", "640", "--quality", "70", h.GetDestinationPath()+".html", h.GetDestinationPath())
+	err = exec.Command("/usr/local/bin/wkhtmltoimage", "--format", h.getImageType(), "--width", "640", "--quality", "70", h.GetDestinationPath()+".html", h.GetDestinationPath()).Run()
 	if err != nil {
 		return err
 	}
-	err = os.Remove(h.destinationPath + ".html")
+	err = os.Remove(h.GetDestinationPath() + ".html")
 	if err != nil {
 		return err
 	}
-	stat, err := os.Stat(h.destinationPath)
+	stat, err := os.Stat(h.GetDestinationPath())
 	if err != nil {
 		return err
 	}
 	if stat.Size() == 0 {
 		// apaga o arquivo gerado
-		err = os.Remove(h.destinationPath)
+		err = os.Remove(h.GetDestinationPath())
 		if err != nil {
 			return err
 		}
@@ -73,15 +72,11 @@ func (h *HTML2Image) generateImageWithExec() error {
 	return nil
 }
 
-func (h *HTML2Image) SetSource(source string) {
-	h.source = source
-}
-
 func (h *HTML2Image) SetDestination(destinationFile string) {
 	destinationFile = strings.ReplaceAll(destinationFile, "..", "")
 	destinationFile = strings.ReplaceAll(destinationFile, "/", "")
 	destinationFile = strings.ReplaceAll(destinationFile, "."+h.getImageType(), "")
-	h.destinationPath = h.getImageDirectory() + string(filepath.Separator) + destinationFile + "." + h.getImageType()
+	h.SetDestinationPath(h.getImageDirectory() + string(filepath.Separator) + destinationFile + "." + h.getImageType())
 }
 
 func (h *HTML2Image) SetScreenWidth(screenWidth uint64) {
@@ -107,19 +102,9 @@ func (h *HTML2Image) getImageDirectory() string {
 }
 
 func (h *HTML2Image) GetDestination() string {
-	return h.destinationPath
+	return h.GetDestinationPath()
 }
 
 func (i *HTML2Image) SetUseExec(useExec bool) {
 	i.useExec = useExec
-}
-
-func (h *HTML2Image) LoadDynamicTemplate(templatePath string, assets, data map[string]string) error {
-	tpl, err := easy_html_template.LoadDynamicTemplateWithAssets(templatePath, assets, data)
-	if err != nil {
-		return err
-	}
-
-	h.SetSource(tpl)
-	return nil
 }
