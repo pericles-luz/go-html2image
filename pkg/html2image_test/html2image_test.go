@@ -14,7 +14,7 @@ func TestImageGeneration(t *testing.T) {
 	if os.Getenv("GITHUB") == "yes" {
 		t.Skip("Skipping test on github")
 	}
-	ig := html2image.New()
+	ig := html2image.NewHTML2Imge()
 	ig.SetSource(htmlSource())
 	ig.SetDestination("teste.png")
 	ig.SetScreenWidth(640)
@@ -32,7 +32,7 @@ func TestHTML2ImageLoadDynamicTemplate(t *testing.T) {
 	assets["PNG_ConnectSimulacaoLogo"] = utils.GetBaseDirectory("templates/assets/images") + "/connect-simulacao-logo.png"
 	assets["PNG_BV"] = utils.GetBaseDirectory("templates/assets/images") + "/bv.png"
 
-	ig := html2image.New()
+	ig := html2image.NewHTML2Imge()
 	require.NoError(t, ig.LoadDynamicTemplate(utils.GetBaseDirectory("templates")+"/connect-simulacao-fgts.html", assets, map[string]string{}))
 	ig.SetDestination("teste.png")
 	ig.SetScreenWidth(640)
@@ -52,7 +52,7 @@ func TestHTML2ImageLoadDynamicTemplateFiliacao(t *testing.T) {
 	data["FILIACAO"] = "13-05-1992"
 	data["DATA"] = time.Now().Format("02/01/2006")
 
-	ig := html2image.New()
+	ig := html2image.NewHTML2Imge()
 	require.NoError(t, ig.LoadDynamicTemplate(utils.GetBaseDirectory("templates")+"/sindireceita-declaracao-filiacao.html", assets, data))
 	ig.SetDestination("teste.png")
 	ig.SetScreenWidth(1080)

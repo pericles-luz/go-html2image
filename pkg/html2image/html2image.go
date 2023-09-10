@@ -25,12 +25,12 @@ type HTML2Image struct {
 	useExec        bool
 }
 
-func New() *HTML2Image {
-	HTML2Image := &HTML2Image{}
-	HTML2Image.useExec = true
-	HTML2Image.imageType = "png"
-	HTML2Image.screenWidth = 640
-	return HTML2Image
+func NewHTML2Imge() *HTML2Image {
+	result := &HTML2Image{}
+	result.useExec = true
+	result.SetFileType("png")
+	result.screenWidth = 640
+	return result
 }
 
 func (h *HTML2Image) GenerateImage() error {
