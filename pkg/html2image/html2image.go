@@ -2,6 +2,7 @@ package html2image
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -48,8 +49,8 @@ func (h *HTML2Image) generateImageWithExec() error {
 	if err != nil {
 		return err
 	}
-	log.Println("/usr/local/bin/wkhtmltoimage", "--format", h.getImageType(), "--width", "640", "--quality", "70", h.GetDestinationPath()+".html", h.GetDestinationPath())
-	err = exec.Command("/usr/local/bin/wkhtmltoimage", "--format", h.getImageType(), "--width", "640", "--quality", "70", h.GetDestinationPath()+".html", h.GetDestinationPath()).Run()
+	log.Println("/usr/local/bin/wkhtmltoimage", "--format", h.getImageType(), "--width", fmt.Sprintf("%d", h.screenWidth), "--quality", "70", h.GetDestinationPath()+".html", h.GetDestinationPath())
+	err = exec.Command("/usr/local/bin/wkhtmltoimage", "--format", h.getImageType(), "--width", fmt.Sprintf("%d", h.screenWidth), "--quality", "70", h.GetDestinationPath()+".html", h.GetDestinationPath()).Run()
 	if err != nil {
 		return err
 	}

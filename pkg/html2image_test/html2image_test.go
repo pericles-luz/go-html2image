@@ -19,6 +19,7 @@ func TestImageGeneration(t *testing.T) {
 	ig.SetDestination("teste.png")
 	ig.SetScreenWidth(640)
 	require.NoError(t, ig.GenerateImage())
+	require.NoError(t, os.Remove(utils.GetBaseDirectory("images")+"/teste.png"))
 }
 
 func TestHTML2ImageLoadDynamicTemplate(t *testing.T) {
@@ -37,6 +38,7 @@ func TestHTML2ImageLoadDynamicTemplate(t *testing.T) {
 	ig.SetDestination("teste.png")
 	ig.SetScreenWidth(640)
 	require.NoError(t, ig.GenerateImage())
+	require.NoError(t, os.Remove(utils.GetBaseDirectory("images")+"/teste.png"))
 }
 
 func TestHTML2ImageLoadDynamicTemplateFiliacao(t *testing.T) {
@@ -57,6 +59,7 @@ func TestHTML2ImageLoadDynamicTemplateFiliacao(t *testing.T) {
 	ig.SetDestination("teste.png")
 	ig.SetScreenWidth(1080)
 	require.NoError(t, ig.GenerateImage())
+	require.NoError(t, os.Remove(utils.GetBaseDirectory("images")+"/teste.png"))
 }
 
 func htmlSource() string {

@@ -4,6 +4,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/pericles-luz/go-base/pkg/utils"
 	"github.com/pericles-luz/go-html2image/pkg/html2pdf"
 	"github.com/stretchr/testify/require"
 )
@@ -17,4 +18,5 @@ func TestPdfGenerationWithExecFromString(t *testing.T) {
 	html2PDF.SetDestination("teste.pdf")
 	err := html2PDF.GeneratePDF()
 	require.NoError(t, err)
+	require.NoError(t, os.Remove(utils.GetBaseDirectory("pdf")+"/teste.pdf"))
 }
