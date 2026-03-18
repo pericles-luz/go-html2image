@@ -38,6 +38,7 @@ func (h *HTML2PDF) GeneratePdfWithExec() error {
 	if err != nil {
 		return err
 	}
+	defer os.Remove(h.GetDestinationPath() + ".html")
 	file := "/usr/bin/wkhtmltopdf"
 	if !utils.FileExists(file) {
 		file = "/usr/local/bin/wkhtmltopdf"
@@ -55,20 +56,13 @@ func (h *HTML2PDF) GeneratePdfWithExec() error {
 	if err != nil {
 		return err
 	}
-	err = os.Remove(h.GetDestinationPath() + ".html")
-	if err != nil {
-		return err
-	}
 	stat, err := os.Stat(h.GetDestinationPath() + h.GetFileType())
 	if err != nil {
 		return err
 	}
 	if stat.Size() == 0 {
 		// apaga o arquivo gerado
-		err = os.Remove(h.GetDestinationPath() + h.GetFileType())
-		if err != nil {
-			return err
-		}
+		os.Remove(h.GetDestinationPath() + h.GetFileType())
 		return errors.New("pdf gerado com tamanho 0")
 	}
 	return nil
